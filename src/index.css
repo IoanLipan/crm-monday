@@ -9,15 +9,15 @@ html, body {
 }
 
 #link {
-  text-decoration: none;
-  color: rgb(46, 46, 46);
+text-decoration: none;
+color: rgb(46, 46, 46);
 }
 
 /* ----- Nav ------ */
 
 nav {
   height: 100vh;
-  background-color: rgb(162, 162, 194);
+  background-color: rgb(43, 43, 63);
   color: rgb(255,255,255);
   text-align: center;
   display: flex;
@@ -51,7 +51,6 @@ nav .icon {
   height:80vh;
   overflow: auto;
 }
-
 /* ----- TicketCard ------ */
 .ticket-card {
   display: flex;
@@ -73,8 +72,7 @@ nav .icon {
 }
 
 .ticket-card .ticket-color {
-  max-width: 15px;
-  padding: 0px;
+  width: 15px;
   margin: 2px;
 }
 
@@ -92,13 +90,8 @@ nav .icon {
 }
 
 .ticket-card .img-container img {
-  max-width: 30px;
-  height: auto;
-}
-
-/* .ticket-card .img-container img {
   width: 100%;
-} */
+}
 
 .ticket-card .status-display {
   display: flex;
@@ -157,26 +150,22 @@ nav .icon {
   background-color: rgb(104, 104, 175);
   height: 100%;
 }
+
 /* ----- Ticket ------ */
 
 .ticket {
   padding: 30px;
   width: 100%;
-  background-color: rgb(240, 240, 240);
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .ticket .ticket-container {
   width: 100%;
   display: flex;
   justify-content: center;
-}
 
-.ticket form {
+}
+.ticket form  {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .ticket form section {
@@ -190,8 +179,7 @@ nav .icon {
   margin: 20px 0 0 0;
 }
 
-.ticket form input,
-.ticket form select {
+.ticket form input, select {
   padding: 10px;
   font-size: 15px;
   border-radius: 10px;
@@ -213,6 +201,5 @@ nav .icon {
 }
 
 .ticket .img-preview img {
-  max-width: 50px;
-  max-height: 50px;
+  width: 100%;
 }

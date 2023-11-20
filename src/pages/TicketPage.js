@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const TicketPage = () => {
@@ -5,15 +7,32 @@ const TicketPage = () => {
     status: "not started",
     progress: 0,
     timestamp: new Date().toISOString(),
-    title: "",
+    title: "New Task",
+    owner: "",
+    avatar: "",
+    category: "",
+    priority: 0,
+    description: "",
   });
   const editMode = false;
 
   const categories = ["test1", "test2"];
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submitted");
+
+    if (!editMode) {
+      const response = await axios.post("http://localhost:8000/tickets", {
+        formData,
+      });
+      console.log(response);
+      const success = response.status === 200;
+      if (success) {
+        navigate("/");
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -23,12 +42,10 @@ const TicketPage = () => {
       ...prevState,
       [name]: value,
     }));
-
-    console.log(value); // Log the updated value instead of formData.priority
   };
 
   return (
-    <div>
+    <div className="ticket">
       <h1>{editMode ? "Update your ticket!" : "Create a Ticket"}</h1>
       <div className="ticket-container">
         <form onSubmit={handleSubmit}>
