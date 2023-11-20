@@ -50,7 +50,6 @@ const TicketPage = ({ editMode }) => {
       const response = await axios.post("http://localhost:8000/tickets", {
         formData,
       });
-      console.log(response);
       const success = response.status === 200;
       if (success) {
         navigate("/");
