@@ -1,10 +1,12 @@
 import React from "react";
 import TicketCard from "../components/TicketCard";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import CategoriesContext from "../context";
 
 const Dashboard = () => {
   const [tickets, setTickets] = useState(null);
+  const { categories, setCategories } = React.useContext(CategoriesContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,12 +25,9 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const uniqueCategories = [
-    ...new Set(tickets?.map(({ category }) => category)),
-  ];
-  const uniqueStatus = [...new Set(tickets?.map(({ status }) => status))];
-
-  console.log(uniqueStatus);
+  useEffect(() => {
+    setCategories([...new Set(tickets?.map(({ category }) => category))]);
+  }, [tickets]);
 
   const colors = [
     "rgb(255, 179, 186)",
@@ -43,7 +42,7 @@ const Dashboard = () => {
       <h1>My Projects</h1>
       <div className="ticket-container">
         {tickets &&
-          uniqueCategories.map((uniqueCategory, categoryIndex) => (
+          categories.map((uniqueCategory, categoryIndex) => (
             <div key={categoryIndex}>
               <h3>{uniqueCategory}</h3>
               {tickets

@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import CategoriesContext from "../context";
 
 const TicketPage = () => {
+  const { categories, setCategories } = useContext(CategoriesContext);
   const [formData, setFormData] = useState({
     status: "not started",
     progress: 0,
@@ -15,8 +17,6 @@ const TicketPage = () => {
     description: "",
   });
   const editMode = false;
-
-  const categories = ["test1", "test2"];
 
   const navigate = useNavigate();
 
@@ -71,7 +71,7 @@ const TicketPage = () => {
             <label>Category</label>
             <select
               name="category"
-              value={formData.category}
+              value={formData.category || categories[0]}
               onChange={handleChange}
             >
               {categories?.map((category, _index) => (
@@ -86,7 +86,6 @@ const TicketPage = () => {
               name="category"
               type="text"
               onChange={handleChange}
-              required={true}
               value={formData.category}
             />
             <label>Priority</label>
