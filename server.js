@@ -50,6 +50,24 @@ app.post("/tickets", async (req, res) => {
   }
 });
 
+app.delete("/tickets/:documentId", async (req, res) => {
+  const id = req.params.documentId;
+  const options = {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "X-Cassandra-Token": token,
+    },
+  };
+  try {
+    const response = await axios(`${url}/${id}`, options);
+    res.status(200).json(response.data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
