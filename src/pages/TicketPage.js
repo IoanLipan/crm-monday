@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 import CategoriesContext from "../context";
 
-const TicketPage = () => {
+const TicketPage = ({ editMode }) => {
   const { categories, setCategories } = useContext(CategoriesContext);
+
   const [formData, setFormData] = useState({
     status: "not started",
     progress: 0,
@@ -16,12 +17,34 @@ const TicketPage = () => {
     priority: 0,
     description: "",
   });
-  const editMode = false;
 
   const navigate = useNavigate();
 
+  let { id } = useParams();
+
+  const fetchData = async () => {
+    const response = await axios.get(`http://localhost:8000/tickets/${id}`);
+    setFormData(response.data.data);
+  };
+
+  useEffect(() => {
+    if (editMode) {
+      fetchData();
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (editMode) {
+      const response = await axios.put(`http://localhost:8000/tickets/${id}`, {
+        data: formData,
+      });
+      const success = response.status === 200;
+      if (success) {
+        navigate("/");
+      }
+    }
 
     if (!editMode) {
       const response = await axios.post("http://localhost:8000/tickets", {
@@ -71,7 +94,7 @@ const TicketPage = () => {
             <label>Category</label>
             <select
               name="category"
-              value={formData.category || categories[0]}
+              value={formData.category || "New Category"}
               onChange={handleChange}
             >
               {categories?.map((category, _index) => (
